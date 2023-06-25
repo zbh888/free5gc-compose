@@ -1,5 +1,9 @@
 # free5GC compose
 
+The base file is included in this repo.
+To compile after changing the base file, one can simply call `./compile.sh`
+Then running the testbed only requires `./run.sh` and the logs will be saved.
+
 This repository is a docker compose version of [free5GC](https://github.com/free5gc/free5gc) for stage 3. It's inspired by [free5gc-docker-compose](https://github.com/calee0219/free5gc-docker-compose) and also reference to [docker-free5gc](https://github.com/abousselmi/docker-free5gc).
 
 You can setup your own config in [config](./config) folder and [docker-compose.yaml](docker-compose.yaml)
