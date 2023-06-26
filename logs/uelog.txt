@@ -1,27 +1,20 @@
 UERANSIM v3.2.6
-[2023-06-26 17:46:04.141] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
-[2023-06-26 17:46:04.142] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
-[2023-06-26 17:46:04.142] [nas] [info] Selected plmn[208/93]
-[2023-06-26 17:46:04.142] [rrc] [info] Selected cell plmn[208/93] tac[1] category[SUITABLE]
-[2023-06-26 17:46:04.142] [nas] [info] UE switches to state [MM-DEREGISTERED/PS]
-[2023-06-26 17:46:04.142] [nas] [info] UE switches to state [MM-DEREGISTERED/NORMAL-SERVICE]
-[2023-06-26 17:46:04.142] [nas] [debug] Initial registration required due to [MM-DEREG-NORMAL-SERVICE]
-[2023-06-26 17:46:04.142] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
-[2023-06-26 17:46:04.142] [nas] [debug] Sending Initial Registration
-[2023-06-26 17:46:04.142] [nas] [info] UE switches to state [MM-REGISTER-INITIATED]
-[2023-06-26 17:46:04.142] [rrc] [debug] Sending RRC Setup Request
-[2023-06-26 17:46:04.143] [rrc] [info] RRC connection established
-[2023-06-26 17:46:04.143] [rrc] [info] UE switches to state [RRC-CONNECTED]
-[2023-06-26 17:46:04.143] [nas] [info] UE switches to state [CM-CONNECTED]
-[2023-06-26 17:46:04.160] [nas] [debug] Authentication Request received
-[2023-06-26 17:46:04.168] [nas] [debug] Security Mode Command received
-[2023-06-26 17:46:04.168] [nas] [debug] Selected integrity[2] ciphering[0]
-[2023-06-26 17:46:04.200] [nas] [debug] Registration accept received
-[2023-06-26 17:46:04.200] [nas] [info] UE switches to state [MM-REGISTERED/NORMAL-SERVICE]
-[2023-06-26 17:46:04.200] [nas] [debug] Sending Registration Complete
-[2023-06-26 17:46:04.200] [nas] [info] Initial Registration is successful
-[2023-06-26 17:46:04.200] [nas] [debug] Sending PDU Session Establishment Request
-[2023-06-26 17:46:04.201] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
-[2023-06-26 17:46:04.446] [nas] [debug] PDU Session Establishment Accept received
-[2023-06-26 17:46:04.446] [nas] [info] PDU Session establishment is successful PSI[1]
-[2023-06-26 17:46:04.456] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
+[2023-06-26 18:27:46.438] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
+[2023-06-26 18:27:46.438] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
+[2023-06-26 18:27:46.439] [nas] [info] Selected plmn[208/93]
+[2023-06-26 18:27:46.439] [rrc] [info] Selected cell plmn[208/93] tac[1] category[SUITABLE]
+[2023-06-26 18:27:46.439] [nas] [info] UE switches to state [MM-DEREGISTERED/PS]
+[2023-06-26 18:27:46.439] [nas] [info] UE switches to state [MM-DEREGISTERED/NORMAL-SERVICE]
+[2023-06-26 18:27:46.439] [nas] [debug] Initial registration required due to [MM-DEREG-NORMAL-SERVICE]
+[2023-06-26 18:27:46.439] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+[2023-06-26 18:27:46.439] [nas] [debug] Sending Initial Registration
+[2023-06-26 18:27:46.439] [nas] [info] UE switches to state [MM-REGISTER-INITIATED]
+[2023-06-26 18:27:46.439] [rrc] [debug] Sending RRC Setup Request
+[2023-06-26 18:27:46.440] [rrc] [info] RRC connection established
+[2023-06-26 18:27:46.440] [rrc] [info] UE switches to state [RRC-CONNECTED]
+[2023-06-26 18:27:46.440] [nas] [info] UE switches to state [CM-CONNECTED]
+[2023-06-26 18:27:46.444] [nas] [error] Initial Registration failed [CONGESTION]
+[2023-06-26 18:27:46.444] [nas] [debug] Handling Registration Reject abnormal case
+[2023-06-26 18:27:46.444] [nas] [info] UE switches to state [MM-DEREGISTERED/ATTEMPTING-REGISTRATION]
+[2023-06-26 18:27:46.547] [nas] [warning] Registration Reject ignored since the MM state is not MM_REGISTERED_INITIATED
+[2023-06-26 18:27:46.547] [nas] [warning] Sending MM Status with cause [MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE]

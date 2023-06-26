@@ -3,6 +3,7 @@ package consumer
 import (
 	"context"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"net/url"
 	"strconv"
@@ -39,6 +40,17 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	if resynchronizationInfo != nil {
 		authInfo.ResynchronizationInfo = resynchronizationInfo
 	}
+
+	//=======================================BOHAN ADDED CODE============================================
+	banList := map[string]bool{
+		"suci-0-208-93-0000-0-0-0000000001": true,
+	}
+	if banList[ue.Suci] {
+		ue.GmmLog.Infof("++++++BOHAN: This SUCI %s has been banned", ue.Suci)
+		return nil, nil, errors.New("Registration Storm Reject")
+	}
+
+	//=======================================BOHAN ENDED HERE=============================================
 
 	ueAuthenticationCtx, httpResponse, err := client.DefaultApi.UeAuthenticationsPost(context.Background(), authInfo)
 	defer func() {
