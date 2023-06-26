@@ -114,7 +114,7 @@ func SendAuthenticationRequest(ue *context.RanUe) {
 		return
 	}
 	amfUe := ue.AmfUe
-	amfUe.GmmLog.Infof("Send Authentication Request")
+	amfUe.GmmLog.Infof("++++++BOHAN: Send Random Challenge (Send Authentication Request)")
 
 	if amfUe.AuthenticationCtx == nil {
 		amfUe.GmmLog.Error("Authentication Context of UE is nil")

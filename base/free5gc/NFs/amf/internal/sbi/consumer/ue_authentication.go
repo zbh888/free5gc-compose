@@ -20,6 +20,7 @@ import (
 func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	resynchronizationInfo *models.ResynchronizationInfo,
 ) (*models.UeAuthenticationCtx, *models.ProblemDetails, error) {
+	ue.GmmLog.Infof("++++++BOHAN: Forward SUCI to AUSF")
 	configuration := Nausf_UEAuthentication.NewConfiguration()
 	configuration.SetBasePath(ue.AusfUri)
 

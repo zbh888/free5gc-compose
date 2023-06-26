@@ -1893,7 +1893,7 @@ func HandleServiceRequest(ue *context.AmfUe, anType models.AccessType,
 func HandleAuthenticationResponse(ue *context.AmfUe, accessType models.AccessType,
 	authenticationResponse *nasMessage.AuthenticationResponse,
 ) error {
-	ue.GmmLog.Info("Handle Authentication Response")
+	ue.GmmLog.Info("++++++BOHAN: Send Response back to AUSF (Handle Authentication Response)")
 
 	ue.StopT3560()
 
