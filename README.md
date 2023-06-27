@@ -18,6 +18,38 @@ python: (As we use python interface to act as UDM to deploy contract, transactio
 
 golang: You don't need to worry about this, the required module is included in this repo.
 
+
+package main
+
+import (
+    "fmt"
+    "log"
+
+    "github.com/ethereum/go-ethereum/common"
+    "github.com/ethereum/go-ethereum/ethclient"
+    guard "github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest"
+)
+
+func main() {
+    client, err := ethclient.Dial("http://127.0.0.1:7545")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    address := common.HexToAddress("0x1213Ce2a55630294BF2EcEB8A94E7f6D3D530CD7")
+    instance, err := guard.NewGuardtest(address, client)
+    if err != nil {
+        log.Fatal(err)
+    }
+    UDMstat, err := instance.GetUDMStatus(nil)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(UDMstat)
+}
+
+
 ## From free5GC team
 
 This repository is a docker compose version of [free5GC](https://github.com/free5gc/free5gc) for stage 3. It's inspired by [free5gc-docker-compose](https://github.com/calee0219/free5gc-docker-compose) and also reference to [docker-free5gc](https://github.com/abousselmi/docker-free5gc).
