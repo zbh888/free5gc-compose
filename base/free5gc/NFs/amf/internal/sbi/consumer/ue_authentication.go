@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"log"
 	"net/url"
 	"strconv"
 
@@ -16,6 +17,10 @@ import (
 	"github.com/free5gc/openapi"
 	"github.com/free5gc/openapi/Nausf_UEAuthentication"
 	"github.com/free5gc/openapi/models"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
+	guard "github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest"
 )
 
 func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
@@ -45,8 +50,24 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	banList := map[string]bool{
 		"suci-0-208-93-0000-0-0-0000000001": true,
 	}
+
+	clientt, err := ethclient.Dial("http://10.100.200.1:7545")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	address := common.HexToAddress("0x20BF28fa62fF5817D1D6209487d03Dc8d6c7EF11")
+	instance, err := guard.NewGuardtest(address, clientt)
+	if err != nil {
+		log.Fatal(err)
+	}
+	UDMstat, err := instance.GetUDMStatus(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ue.GmmLog.Infof("++++++BOHAN: UDM status %v", UDMstat)
 	if banList[ue.Suci] {
-		ue.GmmLog.Infof("++++++BOHAN: This SUCI %s has been banned", ue.Suci)
+		ue.GmmLog.Infof("++++++BOHAN: This BCHERE SUCI %s has been banned", ue.Suci)
 		return nil, nil, errors.New("Registration Storm Reject")
 	}
 
