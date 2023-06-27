@@ -1,8 +1,24 @@
 # free5GC compose
 
-The base file is included in this repo.
+## From Bohan:
+
+The base file (free5gc) is included in this repo.
+
 To compile after changing the base file, one can simply call `./compile.sh`
+
 Then running the testbed only requires `./run.sh` and the logs will be saved.
+
+## ENV Setup:
+
+python: (As we use python interface to act as UDM to deploy contract, transactions, some lib is required in python)
+
+`pip install web3`
+
+`pip install eth-account`
+
+golang: You don't need to worry about this, the required module is included in this repo.
+
+## From free5GC team
 
 This repository is a docker compose version of [free5GC](https://github.com/free5gc/free5gc) for stage 3. It's inspired by [free5gc-docker-compose](https://github.com/calee0219/free5gc-docker-compose) and also reference to [docker-free5gc](https://github.com/abousselmi/docker-free5gc).
 
