@@ -1,4 +1,4 @@
-pragma solidity ^0.8.4;
+pragma solidity 0.8.4;
 
 contract guard {
 
@@ -37,7 +37,7 @@ contract guard {
         saltList[user] = salt;
     }
 
-    function updateSalt(uint256[] calldata users, uint256[] calldata salts) public {
+    function updateSalts(uint256[] calldata users, uint256[] calldata salts) public {
         require(users.length == salts.length, "Input length is different");
         for (uint i = 0; i < users.length; i++) {
             _updateSalt(users[i], salts[i]);
@@ -49,7 +49,7 @@ contract guard {
         blackList[addr] = true;
     }
 
-    function banUser(uint256[] calldata addrs) public {
+    function banUsers(uint256[] calldata addrs) public {
         for (uint i = 0; i < addrs.length; i++) {
             _banUser(addrs[i]);
         }
@@ -60,7 +60,7 @@ contract guard {
         blackList[addr] = false;
     }
 
-    function recoverUser(uint256[] calldata addrs) public {
+    function recoverUsers(uint256[] calldata addrs) public {
         for (uint i = 0; i < addrs.length; i++) {
             _recoverUser(addrs[i]);
         }
@@ -72,7 +72,7 @@ contract guard {
         return (salt, status);
     }
 
-    function getSaltStatus(uint256[] calldata addrs) public view returns (uint256[] memory, bool[] memory) {
+    function getSaltStatuses(uint256[] calldata addrs) public view returns (uint256[] memory, bool[] memory) {
         uint256[] memory salts = new uint256[](addrs.length);
         bool[] memory status = new bool[](addrs.length);
         for (uint i = 0; i < addrs.length; i++) {
