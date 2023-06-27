@@ -8,7 +8,7 @@ To compile after changing the base file, one can simply call `./compile.sh`
 
 Then running the testbed only requires `./run.sh` and the logs will be saved.
 
-## ENV Setup:
+### ENV Setup:
 
 python: (As we use python interface to act as UDM to deploy contract, transactions, some lib is required in python)
 
