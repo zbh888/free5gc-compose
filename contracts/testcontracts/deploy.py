@@ -28,6 +28,9 @@ def chain_banUser(addrs, contract):
     tx_hash = contract.functions.banUsers(addrs).transact()
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
+def chain_getUDMstatus(contract):
+    return contract.functions.getUDMStatus().call()
+
 def chain_getStatus(addrs, contract):
     return contract.functions.getSaltStatuses(addrs).call()
 
@@ -35,9 +38,15 @@ def chain_putUE(addrs, salt, contract):
     tx_hash = contract.functions.updateSalts(addrs, salt).transact()
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
+def chain_changeUDMstatus(contract):
+    tx_hash = contract.functions.changeUDMStatus().transact()
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+
 contract_address, abi = chain_deploy()
 contract = w3.eth.contract(address=contract_address, abi=abi)
 
+chain_changeUDMstatus(contract)
 chain_putUE(availableUEs, salts, contract) # setup the UEs
 chain_banUser(banUEs, contract) # ban some UEs
+print(chain_getUDMstatus(contract))
 print(chain_getStatus(availableUEs, contract)) # See the result confirming it is working
