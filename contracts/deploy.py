@@ -57,4 +57,4 @@ contract = w3.eth.contract(address=contract_address, abi=abi)
 
 chain_putUE(availableUEs, salts, contract) # setup the UEs
 chain_banUser(banUEs, contract) # ban some UEs
-print(getStatus(availableUEs, contract)) # See the result confirming it is working
+print(chain_getStatus(availableUEs, contract)) # See the result confirming it is working
