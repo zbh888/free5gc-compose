@@ -5,6 +5,8 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
 	"log"
 	"net/url"
 	"strconv"
@@ -22,6 +24,21 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	guard "github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest"
 )
+
+// Recover function takes the message and the signature and returns the address
+func Recover(message string, signature string) string {
+	data := []byte(message)
+	hash := crypto.Keccak256Hash(data)
+	sig, err := hexutil.Decode(signature)
+	if err != nil {
+		log.Fatal(err)
+	}
+	sigPublicKeyECDSA, err := crypto.SigToPub(hash.Bytes(), sig)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return crypto.PubkeyToAddress(*sigPublicKeyECDSA).Hex()
+}
 
 func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	resynchronizationInfo *models.ResynchronizationInfo,
