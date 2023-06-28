@@ -633,8 +633,8 @@ github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9dec
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/yuin/goldmark v1.4.1/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
-github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest v0.0.0-20230627224203-2bf299953b27 h1:Arrb5iMonTuR9SDl4JOfk11vDVqX/rHAcke6wlvkDAM=
-github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest v0.0.0-20230627224203-2bf299953b27/go.mod h1:eNcOlVp1ODKSedoHU7JFg6Ny4ywQweS0xirdwY2J0Ys=
+github.com/zbh888/free5gc-compose/contracts/contracts/guard v0.0.0-20230628173110-d6297e8729b7 h1:htpqzJmOeWKp87ELCjQypb2RboIL/pqjEZXLLZhe/os=
+github.com/zbh888/free5gc-compose/contracts/contracts/guard v0.0.0-20230628173110-d6297e8729b7/go.mod h1:+EOjR35qKfS1V9DEpZmHhGu27a3RNdkeayIcDdsMw70=
 go.etcd.io/etcd/api/v3 v3.5.0/go.mod h1:cbVKeC6lCfl7j/8jBhAK6aIYO9XOjdptoxU/nLQcPvs=
 go.etcd.io/etcd/client/pkg/v3 v3.5.0/go.mod h1:IJHfcCEKxYu1Os13ZdwCwIUTUVGYTSAM3YSwc9/Ac1g=
 go.etcd.io/etcd/client/v2 v2.305.0/go.mod h1:h9puh54ZTgAKtEbut2oe9P4L/oqKCVB6xsXlzd7alYQ=

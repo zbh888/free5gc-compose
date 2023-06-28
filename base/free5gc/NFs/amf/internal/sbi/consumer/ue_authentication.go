@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"log"
+	"math/big"
 	"net/url"
 	"strconv"
 
@@ -22,11 +23,11 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	guard "github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest"
+	guard "github.com/zbh888/free5gc-compose/contracts/contracts/guard"
 )
 
-// Recover function takes the message and the signature and returns the address
-func Recover(message string, signature string) string {
+// Recover function takes the message and the signature and returns the address, which can be used for query
+func Recover(message string, signature string) common.Address {
 	data := []byte(message)
 	hash := crypto.Keccak256Hash(data)
 	sig, err := hexutil.Decode(signature)
@@ -37,7 +38,8 @@ func Recover(message string, signature string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return crypto.PubkeyToAddress(*sigPublicKeyECDSA).Hex()
+	addr_hex := crypto.PubkeyToAddress(*sigPublicKeyECDSA).Hex()
+	return common.HexToAddress(addr_hex)
 }
 
 func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
@@ -64,17 +66,21 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	}
 
 	//=======================================BOHAN ADDED CODE============================================
-	banList := map[string]bool{
-		"suci-0-208-93-0000-0-0-0000000001": true,
-	}
+	//banList := map[string]bool{
+	//	"suci-0-208-93-0000-0-0-0000000001": true,
+	//}
 
-	clientt, err := ethclient.Dial("http://10.100.200.1:7545")
+	web3url := "http://10.100.200.1:7545"
+	contractAddr := "0x20BF28fa62fF5817D1D6209487d03Dc8d6c7EF11"
+	ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain")
+	clientt, err := ethclient.Dial(web3url)
 	if err != nil {
 		log.Fatal(err)
 	}
+	ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain Success")
 
-	address := common.HexToAddress("0x20BF28fa62fF5817D1D6209487d03Dc8d6c7EF11")
-	instance, err := guard.NewGuardtest(address, clientt)
+	address := common.HexToAddress(contractAddr)
+	instance, err := guard.NewGuard(address, clientt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -82,10 +88,29 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	if err != nil {
 		log.Fatal(err)
 	}
-	ue.GmmLog.Infof("++++++BOHAN: UDM status %v", UDMstat)
-	if banList[ue.Suci] {
-		ue.GmmLog.Infof("++++++BOHAN: This BCHERE SUCI %s has been banned", ue.Suci)
-		return nil, nil, errors.New("Registration Storm Reject")
+	ue.GmmLog.Infof("++++++BOHAN: UDM is under attack? %v", UDMstat)
+	if UDMstat {
+		// The UDM is under attack, requesting information from UE
+		randChallenge := "hello"
+		// SENDING UE this RNAD
+		// Receiving encrypted signature from UE
+		// Decrypting signature
+		SUCI := ""
+		SEAFmessage := randChallenge + SUCI
+		// decrypt and obtain the signature
+		BlockchainSignature := "0x1dff2866663a164cb9f9458c20bb16cee477e00a63d659c88d6ef697c05362b422953d1fef36c631640cf07504976e21bfcc662578e7ad8175562638f9135d7800"
+		UEaddress := Recover(SEAFmessage, BlockchainSignature)
+		salt, ban, err := instance.GetSaltStatus(nil, UEaddress)
+		if err != nil {
+			log.Fatal(err)
+		}
+		if salt.Cmp(big.NewInt(0)) == 0 {
+			return nil, nil, errors.New("Registration Storm Reject: Invalid Subscriber")
+		}
+		// check integrity with salt
+		if ban {
+			return nil, nil, errors.New("Registration Storm Reject: Malicious UE from UDM")
+		}
 	}
 
 	//=======================================BOHAN ENDED HERE=============================================

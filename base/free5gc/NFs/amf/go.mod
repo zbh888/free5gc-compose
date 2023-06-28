@@ -27,7 +27,7 @@ require (
 
 require (
 	github.com/ethereum/go-ethereum v1.10.26
-	github.com/zbh888/free5gc-compose/contracts/testcontracts/guardtest v0.0.0-20230627224203-2bf299953b27
+	github.com/zbh888/free5gc-compose/contracts/contracts/guard v0.0.0-20230628173110-d6297e8729b7
 )
 
 require (
