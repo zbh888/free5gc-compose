@@ -8,9 +8,9 @@ w3 = web3.Web3(web3.HTTPProvider('http://127.0.0.1:7545'))
 bytecode = config.bytecode
 abi = config.abi
 
-#availableUEs = []
-#salts = [1,2,3,4,5,6]
-#banUEs = []
+availableUEs = ["0xA2911d7Af5b6277DDE54c89A5D94B793Ddf5c606", "0xDd115D0d6fb0D1b68CA3B0C993c40a62d65610b8"]
+salts = [1,1]
+banUEs = ["0xA2911d7Af5b6277DDE54c89A5D94B793Ddf5c606"]
 
 def chain_deploy():
     # This is the Home Network which is the owner of the contract
