@@ -65,55 +65,134 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 		authInfo.ResynchronizationInfo = resynchronizationInfo
 	}
 
-	//=======================================BOHAN ADDED CODE============================================
-	//banList := map[string]bool{
-	//	"suci-0-208-93-0000-0-0-0000000001": true,
-	//}
+  //=======================================BOHAN ADDED CODE============================================
 
-	web3url := "http://10.100.200.1:7545"
-	contractAddr := "0x20BF28fa62fF5817D1D6209487d03Dc8d6c7EF11"
-	ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain")
-	clientt, err := ethclient.Dial(web3url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain Success")
 
-	address := common.HexToAddress(contractAddr)
-	instance, err := guard.NewGuard(address, clientt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	UDMstat, err := instance.GetUDMStatus(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	ue.GmmLog.Infof("++++++BOHAN: UDM is under attack? %v", UDMstat)
-	if UDMstat {
-		// The UDM is under attack, requesting information from UE
-		randChallenge := "hello"
-		// SENDING UE this RNAD
-		// Receiving encrypted signature from UE
-		// Decrypting signature
-		SUCI := ""
-		SEAFmessage := randChallenge + SUCI
-		// decrypt and obtain the signature
-		BlockchainSignature := "0x1dff2866663a164cb9f9458c20bb16cee477e00a63d659c88d6ef697c05362b422953d1fef36c631640cf07504976e21bfcc662578e7ad8175562638f9135d7800"
-		UEaddress := Recover(SEAFmessage, BlockchainSignature)
-		salt, ban, err := instance.GetSaltStatus(nil, UEaddress)
-		if err != nil {
-			log.Fatal(err)
-		}
-		if salt.Cmp(big.NewInt(0)) == 0 {
-			return nil, nil, errors.New("Registration Storm Reject: Invalid Subscriber")
-		}
-		// check integrity with salt
-		if ban {
-			return nil, nil, errors.New("Registration Storm Reject: Malicious UE from UDM")
-		}
-	}
 
-	//=======================================BOHAN ENDED HERE=============================================
+
+    goodsig := "0xd7d452ab38141df051699a54096f9b98c8f247af5028bba5fb226d67bc229b7c4fb0ea0cd5d901f9c4f085fa77b491c21b95e3e8af2ee0fce727ed00a74ade7900"
+
+    badsig := "0x1dff2866663a164cb9f9458c20bb16cee477e00a63d659c88d6ef697c05362b422953d1fef36c631640cf07504976e21bfcc662578e7ad8175562638f9135d7800"
+
+
+
+    //=========== PAUL
+
+    // Get the last 5 digits as a substring
+
+    lastFiveDigitsStr := ue.Suci[len(ue.Suci)-5:]
+
+    BlockchainSignature := badsig
+
+
+
+
+    // Convert the substring to an integer
+
+    _, err := strconv.Atoi(lastFiveDigitsStr)
+
+    if err != nil {
+
+        BlockchainSignature = goodsig
+
+    }
+
+
+    web3url := "http://10.244.1.30:8545"
+
+    contractAddr := "0x766dcfA6a86576aD0c06bbcC9bD275b8B6849C17"
+
+    ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain")
+
+    clientt, err := ethclient.Dial(web3url)
+
+    if err != nil {
+
+        log.Fatal(err)
+
+    }
+
+    ue.GmmLog.Infof("++++++BOHAN: Connecting Blockchain Success")
+
+
+
+
+    address := common.HexToAddress(contractAddr)
+
+    instance, err := guard.NewGuard(address, clientt)
+
+    if err != nil {
+
+        log.Fatal(err)
+
+    }
+
+    UDMstat, err := instance.GetUDMStatus(nil)
+
+    if err != nil {
+
+        log.Fatal(err)
+
+    }
+
+    ue.GmmLog.Infof("++++++BOHAN: UDM is under attack? %v", UDMstat)
+
+    if UDMstat {
+
+        // The UDM is under attack, requesting information from UE
+
+        randChallenge := "hello"
+
+        // SENDING UE this RAND
+
+        sleepDuration := 50 * time.Millisecond
+
+        time.Sleep(sleepDuration)
+
+        // Receiving encrypted signature from UE
+
+        // Decrypting signature
+
+        SUCI := ""
+
+        SEAFmessage := randChallenge + SUCI
+
+        // decrypt and obtain the signature
+
+        //BlockchainSignature := "0x1dff2866663a164cb9f9458c20bb16cee477e00a63d659c88d6ef697c05362b422953d1fef36c631640cf07504976e21bfcc662578e7ad8175562638f9135d7800"
+
+        
+
+        UEaddress := Recover(SEAFmessage, BlockchainSignature)
+
+        salt, ban, err := instance.GetSaltStatus(nil, UEaddress)
+
+        if err != nil {
+
+            log.Fatal(err)
+
+        }
+
+        if salt.Cmp(big.NewInt(0)) == 0 {
+
+            return nil, nil, errors.New("Registration Storm Reject: Invalid Subscriber")
+
+        }
+
+        // check integrity with salt
+
+        if ban {
+
+            return nil, nil, errors.New("Registration Storm Reject: Malicious UE from UDM")
+
+        }
+
+    }
+
+
+
+
+    //=======================================BOHAN ENDED HERE=============================================
 
 	ueAuthenticationCtx, httpResponse, err := client.DefaultApi.UeAuthenticationsPost(context.Background(), authInfo)
 	defer func() {
